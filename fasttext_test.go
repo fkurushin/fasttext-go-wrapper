@@ -50,8 +50,25 @@ func TestTrain(t *testing.T) {
 		t.Errorf("error training model: %v", err)
 	}
 
-	err = modelNew.SaveModel(outputFileName)
+	err = modelNew.SaveModel(outputFileName + ".bin")
 	if err != nil {
 		t.Errorf("error writing to a file: %v: %v", outputFileName, err)
 	}
+}
+
+func TestQuantize(t *testing.T) {
+	var (
+		inputFileName  = "test_data/clf.bin"
+		outputFileName = "test_data/clf"
+	)
+	modelQuant := &Model{isInitialized: false}
+
+	err := modelQuant.Quantize(inputFileName, outputFileName)
+	if err != nil {
+		t.Errorf("error quantizing model: %v", err)
+	}
+	// err = modelQuant.SaveModel(outputFileName)
+	// if err != nil {
+	// 	t.Errorf("error writing to a file: %v: %v", outputFileName, err)
+	// }
 }

@@ -8,6 +8,7 @@ package fasttext
 // int ft_get_sentence_vector(char* query_in, float* vector, int vector_size);
 // int ft_train(const char* model_name, const char* input, const char* output, int epoch, int word_ngrams, int thread, float lr);
 // int ft_save_model(const char* filename);
+// int ft_quantize(const char* input, const char* output);
 import "C"
 
 import (
@@ -37,7 +38,7 @@ type Model struct {
 }
 
 // New should be used to instantiate the model.
-// FastTest needs some initialization for the model binary located on `file`.
+// FastText needs some initialization for the model binary located on `file`.
 func New(file string) (*Model, error) {
 
 	status := C.ft_load_model(C.CString(file))
@@ -149,6 +150,17 @@ func (m *Model) Train(model_name, input, output string, epoch, word_ngrams, thre
 
 	if status != 0 {
 		return fmt.Errorf("error while training `%s` fasttext model", model_name)
+	}
+	m.isInitialized = true
+	return nil
+}
+
+func (m *Model) Quantize(input, ouput string) error {
+
+	status := C.ft_quantize(C.CString(input), C.CString(input))
+
+	if status != 0 {
+		return fmt.Errorf("error while quantizing `%s` to a `%s` file", input, ouput)
 	}
 	m.isInitialized = true
 	return nil

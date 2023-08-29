@@ -113,6 +113,13 @@ extern "C" {
         } else {
             return -1;
         }
+
+        if (access(input, R_OK) != 0) {
+            return -1;
+        }
+        if (access(output, W_OK) != 0) {
+            return -1;
+        }
             
         args_object.input = input;
         args_object.output = output;
@@ -123,6 +130,25 @@ extern "C" {
 
         ft_model.train(args_object);
         ft_initialized = true;
+        return 0;
+    }
+
+    int ft_quantize(const char* input, const char* output)
+    {
+        if (access(input, R_OK) != 0) {
+            return -1;
+        }
+        if (access(output, W_OK) != 0) {
+            return -1;
+        }
+
+        fasttext::Args args_object;
+
+        args_object.input = input;
+        args_object.output = output;
+
+        ft_model.quantize(args_object);
+        
         return 0;
     }
 }

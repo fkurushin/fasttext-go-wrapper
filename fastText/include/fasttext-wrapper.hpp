@@ -59,8 +59,13 @@ extern "C" {
     int ft_save_model(const char* filename);
 
     /**
-     * 
+     * zip fasttext model to output file, saveing new model in .ftz format
+     * it is not necessary to load model b4 quantizing, but model should be
+     * loaded on disk b4 quantizing
+     * `input`: input filename with bin, e.g. model.bin
+     * `output`: output filename, without .bin, e.g. model
+     * returns 0 on success
      * **/ 
-    // int ft_quantize(const fasttext::Args& qargs);
+    int ft_quantize(const char* input, const char* output);
 
 }
