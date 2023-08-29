@@ -40,6 +40,7 @@ extern "C" {
 
     /**
      * train function training fasttext model from input file
+     * but does not writing in to the output file, due to fasttext realization
      * `model_name`: type of training model "skipgram", "cbow", "supervised"
      * `input`: input filename
      * `output`: output filename
